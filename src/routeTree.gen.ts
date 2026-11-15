@@ -9,50 +9,666 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as AppAlertsRouteImport } from './routes/_app/alerts'
+import { Route as AppAnalyticsRouteImport } from './routes/_app/analytics'
+import { Route as AppCashupRouteImport } from './routes/_app/cashup'
+import { Route as AppDailyRouteImport } from './routes/_app/daily'
+import { Route as AppDocumentsRouteImport } from './routes/_app/documents'
+import { Route as AppEquipmentRouteImport } from './routes/_app/equipment'
+import { Route as AppExpenseCategoriesRouteImport } from './routes/_app/expense-categories'
+import { Route as AppFeedRouteImport } from './routes/_app/feed'
+import { Route as AppHealthRouteImport } from './routes/_app/health'
+import { Route as AppMedicationRouteImport } from './routes/_app/medication'
+import { Route as AppPhotosRouteImport } from './routes/_app/photos'
+import { Route as AppPriceHistoryRouteImport } from './routes/_app/price-history'
+import { Route as AppReportsRouteImport } from './routes/_app/reports'
+import { Route as AppSettingsRouteImport } from './routes/_app/settings'
+import { Route as AppStaffPaymentsRouteImport } from './routes/_app/staff-payments'
+import { Route as AppStockRouteImport } from './routes/_app/stock'
+import { Route as AppSuppliersRouteImport } from './routes/_app/suppliers'
+import { Route as AppVaccinationRouteImport } from './routes/_app/vaccination'
+import { Route as AppCustomersIndexRouteImport } from './routes/_app/customers/index'
+import { Route as AppCustomersIdRouteImport } from './routes/_app/customers/$id'
+import { Route as AppExpensesIndexRouteImport } from './routes/_app/expenses/index'
+import { Route as AppExpensesNewRouteImport } from './routes/_app/expenses/new'
+import { Route as AppFlocksIndexRouteImport } from './routes/_app/flocks/index'
+import { Route as AppFlocksIdRouteImport } from './routes/_app/flocks/$id'
+import { Route as AppSalesIndexRouteImport } from './routes/_app/sales/index'
+import { Route as AppSalesNewRouteImport } from './routes/_app/sales/new'
 
-const IndexRoute = IndexRouteImport.update({
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAlertsRoute = AppAlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCashupRoute = AppCashupRouteImport.update({
+  id: '/cashup',
+  path: '/cashup',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDailyRoute = AppDailyRouteImport.update({
+  id: '/daily',
+  path: '/daily',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDocumentsRoute = AppDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEquipmentRoute = AppEquipmentRouteImport.update({
+  id: '/equipment',
+  path: '/equipment',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppExpenseCategoriesRoute = AppExpenseCategoriesRouteImport.update({
+  id: '/expense-categories',
+  path: '/expense-categories',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFeedRoute = AppFeedRouteImport.update({
+  id: '/feed',
+  path: '/feed',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHealthRoute = AppHealthRouteImport.update({
+  id: '/health',
+  path: '/health',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMedicationRoute = AppMedicationRouteImport.update({
+  id: '/medication',
+  path: '/medication',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPhotosRoute = AppPhotosRouteImport.update({
+  id: '/photos',
+  path: '/photos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPriceHistoryRoute = AppPriceHistoryRouteImport.update({
+  id: '/price-history',
+  path: '/price-history',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReportsRoute = AppReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppStaffPaymentsRoute = AppStaffPaymentsRouteImport.update({
+  id: '/staff-payments',
+  path: '/staff-payments',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppStockRoute = AppStockRouteImport.update({
+  id: '/stock',
+  path: '/stock',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSuppliersRoute = AppSuppliersRouteImport.update({
+  id: '/suppliers',
+  path: '/suppliers',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppVaccinationRoute = AppVaccinationRouteImport.update({
+  id: '/vaccination',
+  path: '/vaccination',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCustomersIndexRoute = AppCustomersIndexRouteImport.update({
+  id: '/customers/',
+  path: '/customers/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCustomersIdRoute = AppCustomersIdRouteImport.update({
+  id: '/customers/$id',
+  path: '/customers/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppExpensesIndexRoute = AppExpensesIndexRouteImport.update({
+  id: '/expenses/',
+  path: '/expenses/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppExpensesNewRoute = AppExpensesNewRouteImport.update({
+  id: '/expenses/new',
+  path: '/expenses/new',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFlocksIndexRoute = AppFlocksIndexRouteImport.update({
+  id: '/flocks/',
+  path: '/flocks/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFlocksIdRoute = AppFlocksIdRouteImport.update({
+  id: '/flocks/$id',
+  path: '/flocks/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSalesIndexRoute = AppSalesIndexRouteImport.update({
+  id: '/sales/',
+  path: '/sales/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSalesNewRoute = AppSalesNewRouteImport.update({
+  id: '/sales/new',
+  path: '/sales/new',
+  getParentRoute: () => AppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AppIndexRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/alerts': typeof AppAlertsRoute
+  '/analytics': typeof AppAnalyticsRoute
+  '/cashup': typeof AppCashupRoute
+  '/daily': typeof AppDailyRoute
+  '/documents': typeof AppDocumentsRoute
+  '/equipment': typeof AppEquipmentRoute
+  '/expense-categories': typeof AppExpenseCategoriesRoute
+  '/feed': typeof AppFeedRoute
+  '/health': typeof AppHealthRoute
+  '/medication': typeof AppMedicationRoute
+  '/photos': typeof AppPhotosRoute
+  '/price-history': typeof AppPriceHistoryRoute
+  '/reports': typeof AppReportsRoute
+  '/settings': typeof AppSettingsRoute
+  '/staff-payments': typeof AppStaffPaymentsRoute
+  '/stock': typeof AppStockRoute
+  '/suppliers': typeof AppSuppliersRoute
+  '/vaccination': typeof AppVaccinationRoute
+  '/customers/$id': typeof AppCustomersIdRoute
+  '/expenses/new': typeof AppExpensesNewRoute
+  '/flocks/$id': typeof AppFlocksIdRoute
+  '/sales/new': typeof AppSalesNewRoute
+  '/customers/': typeof AppCustomersIndexRoute
+  '/expenses/': typeof AppExpensesIndexRoute
+  '/flocks/': typeof AppFlocksIndexRoute
+  '/sales/': typeof AppSalesIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/alerts': typeof AppAlertsRoute
+  '/analytics': typeof AppAnalyticsRoute
+  '/cashup': typeof AppCashupRoute
+  '/daily': typeof AppDailyRoute
+  '/documents': typeof AppDocumentsRoute
+  '/equipment': typeof AppEquipmentRoute
+  '/expense-categories': typeof AppExpenseCategoriesRoute
+  '/feed': typeof AppFeedRoute
+  '/health': typeof AppHealthRoute
+  '/medication': typeof AppMedicationRoute
+  '/photos': typeof AppPhotosRoute
+  '/price-history': typeof AppPriceHistoryRoute
+  '/reports': typeof AppReportsRoute
+  '/settings': typeof AppSettingsRoute
+  '/staff-payments': typeof AppStaffPaymentsRoute
+  '/stock': typeof AppStockRoute
+  '/suppliers': typeof AppSuppliersRoute
+  '/vaccination': typeof AppVaccinationRoute
+  '/': typeof AppIndexRoute
+  '/customers/$id': typeof AppCustomersIdRoute
+  '/expenses/new': typeof AppExpensesNewRoute
+  '/flocks/$id': typeof AppFlocksIdRoute
+  '/sales/new': typeof AppSalesNewRoute
+  '/customers': typeof AppCustomersIndexRoute
+  '/expenses': typeof AppExpensesIndexRoute
+  '/flocks': typeof AppFlocksIndexRoute
+  '/sales': typeof AppSalesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/_app/alerts': typeof AppAlertsRoute
+  '/_app/analytics': typeof AppAnalyticsRoute
+  '/_app/cashup': typeof AppCashupRoute
+  '/_app/daily': typeof AppDailyRoute
+  '/_app/documents': typeof AppDocumentsRoute
+  '/_app/equipment': typeof AppEquipmentRoute
+  '/_app/expense-categories': typeof AppExpenseCategoriesRoute
+  '/_app/feed': typeof AppFeedRoute
+  '/_app/health': typeof AppHealthRoute
+  '/_app/medication': typeof AppMedicationRoute
+  '/_app/photos': typeof AppPhotosRoute
+  '/_app/price-history': typeof AppPriceHistoryRoute
+  '/_app/reports': typeof AppReportsRoute
+  '/_app/settings': typeof AppSettingsRoute
+  '/_app/staff-payments': typeof AppStaffPaymentsRoute
+  '/_app/stock': typeof AppStockRoute
+  '/_app/suppliers': typeof AppSuppliersRoute
+  '/_app/vaccination': typeof AppVaccinationRoute
+  '/_app/': typeof AppIndexRoute
+  '/_app/customers/$id': typeof AppCustomersIdRoute
+  '/_app/expenses/new': typeof AppExpensesNewRoute
+  '/_app/flocks/$id': typeof AppFlocksIdRoute
+  '/_app/sales/new': typeof AppSalesNewRoute
+  '/_app/customers/': typeof AppCustomersIndexRoute
+  '/_app/expenses/': typeof AppExpensesIndexRoute
+  '/_app/flocks/': typeof AppFlocksIndexRoute
+  '/_app/sales/': typeof AppSalesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/reset-password'
+    | '/alerts'
+    | '/analytics'
+    | '/cashup'
+    | '/daily'
+    | '/documents'
+    | '/equipment'
+    | '/expense-categories'
+    | '/feed'
+    | '/health'
+    | '/medication'
+    | '/photos'
+    | '/price-history'
+    | '/reports'
+    | '/settings'
+    | '/staff-payments'
+    | '/stock'
+    | '/suppliers'
+    | '/vaccination'
+    | '/customers/$id'
+    | '/expenses/new'
+    | '/flocks/$id'
+    | '/sales/new'
+    | '/customers/'
+    | '/expenses/'
+    | '/flocks/'
+    | '/sales/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/login'
+    | '/reset-password'
+    | '/alerts'
+    | '/analytics'
+    | '/cashup'
+    | '/daily'
+    | '/documents'
+    | '/equipment'
+    | '/expense-categories'
+    | '/feed'
+    | '/health'
+    | '/medication'
+    | '/photos'
+    | '/price-history'
+    | '/reports'
+    | '/settings'
+    | '/staff-payments'
+    | '/stock'
+    | '/suppliers'
+    | '/vaccination'
+    | '/'
+    | '/customers/$id'
+    | '/expenses/new'
+    | '/flocks/$id'
+    | '/sales/new'
+    | '/customers'
+    | '/expenses'
+    | '/flocks'
+    | '/sales'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/login'
+    | '/reset-password'
+    | '/_app/alerts'
+    | '/_app/analytics'
+    | '/_app/cashup'
+    | '/_app/daily'
+    | '/_app/documents'
+    | '/_app/equipment'
+    | '/_app/expense-categories'
+    | '/_app/feed'
+    | '/_app/health'
+    | '/_app/medication'
+    | '/_app/photos'
+    | '/_app/price-history'
+    | '/_app/reports'
+    | '/_app/settings'
+    | '/_app/staff-payments'
+    | '/_app/stock'
+    | '/_app/suppliers'
+    | '/_app/vaccination'
+    | '/_app/'
+    | '/_app/customers/$id'
+    | '/_app/expenses/new'
+    | '/_app/flocks/$id'
+    | '/_app/sales/new'
+    | '/_app/customers/'
+    | '/_app/expenses/'
+    | '/_app/flocks/'
+    | '/_app/sales/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/': {
+      id: '/_app/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/alerts': {
+      id: '/_app/alerts'
+      path: '/alerts'
+      fullPath: '/alerts'
+      preLoaderRoute: typeof AppAlertsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/analytics': {
+      id: '/_app/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AppAnalyticsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/cashup': {
+      id: '/_app/cashup'
+      path: '/cashup'
+      fullPath: '/cashup'
+      preLoaderRoute: typeof AppCashupRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/daily': {
+      id: '/_app/daily'
+      path: '/daily'
+      fullPath: '/daily'
+      preLoaderRoute: typeof AppDailyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/documents': {
+      id: '/_app/documents'
+      path: '/documents'
+      fullPath: '/documents'
+      preLoaderRoute: typeof AppDocumentsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/equipment': {
+      id: '/_app/equipment'
+      path: '/equipment'
+      fullPath: '/equipment'
+      preLoaderRoute: typeof AppEquipmentRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/expense-categories': {
+      id: '/_app/expense-categories'
+      path: '/expense-categories'
+      fullPath: '/expense-categories'
+      preLoaderRoute: typeof AppExpenseCategoriesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/feed': {
+      id: '/_app/feed'
+      path: '/feed'
+      fullPath: '/feed'
+      preLoaderRoute: typeof AppFeedRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/health': {
+      id: '/_app/health'
+      path: '/health'
+      fullPath: '/health'
+      preLoaderRoute: typeof AppHealthRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/medication': {
+      id: '/_app/medication'
+      path: '/medication'
+      fullPath: '/medication'
+      preLoaderRoute: typeof AppMedicationRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/photos': {
+      id: '/_app/photos'
+      path: '/photos'
+      fullPath: '/photos'
+      preLoaderRoute: typeof AppPhotosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/price-history': {
+      id: '/_app/price-history'
+      path: '/price-history'
+      fullPath: '/price-history'
+      preLoaderRoute: typeof AppPriceHistoryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/reports': {
+      id: '/_app/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AppReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/staff-payments': {
+      id: '/_app/staff-payments'
+      path: '/staff-payments'
+      fullPath: '/staff-payments'
+      preLoaderRoute: typeof AppStaffPaymentsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/stock': {
+      id: '/_app/stock'
+      path: '/stock'
+      fullPath: '/stock'
+      preLoaderRoute: typeof AppStockRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/suppliers': {
+      id: '/_app/suppliers'
+      path: '/suppliers'
+      fullPath: '/suppliers'
+      preLoaderRoute: typeof AppSuppliersRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/vaccination': {
+      id: '/_app/vaccination'
+      path: '/vaccination'
+      fullPath: '/vaccination'
+      preLoaderRoute: typeof AppVaccinationRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customers/': {
+      id: '/_app/customers/'
+      path: '/customers'
+      fullPath: '/customers/'
+      preLoaderRoute: typeof AppCustomersIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/customers/$id': {
+      id: '/_app/customers/$id'
+      path: '/customers/$id'
+      fullPath: '/customers/$id'
+      preLoaderRoute: typeof AppCustomersIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/expenses/': {
+      id: '/_app/expenses/'
+      path: '/expenses'
+      fullPath: '/expenses/'
+      preLoaderRoute: typeof AppExpensesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/expenses/new': {
+      id: '/_app/expenses/new'
+      path: '/expenses/new'
+      fullPath: '/expenses/new'
+      preLoaderRoute: typeof AppExpensesNewRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/flocks/': {
+      id: '/_app/flocks/'
+      path: '/flocks'
+      fullPath: '/flocks/'
+      preLoaderRoute: typeof AppFlocksIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/flocks/$id': {
+      id: '/_app/flocks/$id'
+      path: '/flocks/$id'
+      fullPath: '/flocks/$id'
+      preLoaderRoute: typeof AppFlocksIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/sales/': {
+      id: '/_app/sales/'
+      path: '/sales'
+      fullPath: '/sales/'
+      preLoaderRoute: typeof AppSalesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/sales/new': {
+      id: '/_app/sales/new'
+      path: '/sales/new'
+      fullPath: '/sales/new'
+      preLoaderRoute: typeof AppSalesNewRouteImport
+      parentRoute: typeof AppRoute
     }
   }
 }
 
+interface AppRouteChildren {
+  AppAlertsRoute: typeof AppAlertsRoute
+  AppAnalyticsRoute: typeof AppAnalyticsRoute
+  AppCashupRoute: typeof AppCashupRoute
+  AppDailyRoute: typeof AppDailyRoute
+  AppDocumentsRoute: typeof AppDocumentsRoute
+  AppEquipmentRoute: typeof AppEquipmentRoute
+  AppExpenseCategoriesRoute: typeof AppExpenseCategoriesRoute
+  AppFeedRoute: typeof AppFeedRoute
+  AppHealthRoute: typeof AppHealthRoute
+  AppMedicationRoute: typeof AppMedicationRoute
+  AppPhotosRoute: typeof AppPhotosRoute
+  AppPriceHistoryRoute: typeof AppPriceHistoryRoute
+  AppReportsRoute: typeof AppReportsRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppStaffPaymentsRoute: typeof AppStaffPaymentsRoute
+  AppStockRoute: typeof AppStockRoute
+  AppSuppliersRoute: typeof AppSuppliersRoute
+  AppVaccinationRoute: typeof AppVaccinationRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppCustomersIdRoute: typeof AppCustomersIdRoute
+  AppExpensesNewRoute: typeof AppExpensesNewRoute
+  AppFlocksIdRoute: typeof AppFlocksIdRoute
+  AppSalesNewRoute: typeof AppSalesNewRoute
+  AppCustomersIndexRoute: typeof AppCustomersIndexRoute
+  AppExpensesIndexRoute: typeof AppExpensesIndexRoute
+  AppFlocksIndexRoute: typeof AppFlocksIndexRoute
+  AppSalesIndexRoute: typeof AppSalesIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAlertsRoute: AppAlertsRoute,
+  AppAnalyticsRoute: AppAnalyticsRoute,
+  AppCashupRoute: AppCashupRoute,
+  AppDailyRoute: AppDailyRoute,
+  AppDocumentsRoute: AppDocumentsRoute,
+  AppEquipmentRoute: AppEquipmentRoute,
+  AppExpenseCategoriesRoute: AppExpenseCategoriesRoute,
+  AppFeedRoute: AppFeedRoute,
+  AppHealthRoute: AppHealthRoute,
+  AppMedicationRoute: AppMedicationRoute,
+  AppPhotosRoute: AppPhotosRoute,
+  AppPriceHistoryRoute: AppPriceHistoryRoute,
+  AppReportsRoute: AppReportsRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppStaffPaymentsRoute: AppStaffPaymentsRoute,
+  AppStockRoute: AppStockRoute,
+  AppSuppliersRoute: AppSuppliersRoute,
+  AppVaccinationRoute: AppVaccinationRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppCustomersIdRoute: AppCustomersIdRoute,
+  AppExpensesNewRoute: AppExpensesNewRoute,
+  AppFlocksIdRoute: AppFlocksIdRoute,
+  AppSalesNewRoute: AppSalesNewRoute,
+  AppCustomersIndexRoute: AppCustomersIndexRoute,
+  AppExpensesIndexRoute: AppExpensesIndexRoute,
+  AppFlocksIndexRoute: AppFlocksIndexRoute,
+  AppSalesIndexRoute: AppSalesIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  LoginRoute: LoginRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
