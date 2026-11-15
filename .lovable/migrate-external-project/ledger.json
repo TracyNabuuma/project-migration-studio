@@ -1,10 +1,68 @@
-{"source":"code-archive KukuLedger_Zip.zip","capabilities":[
-{"capability":"code","source":"client/ (Vite + react-router + Dexie offline store)","outcome":"migrate","status":"in_progress","next_action":"Port screens to TanStack routes"},
-{"capability":"schema","source":"server/migrations/0001_core.sql (users, record_store, sync_log)","outcome":"migrate","status":"in_progress","next_action":"Recreate in Lovable Cloud with RLS"},
-{"capability":"records","source":"Postgres record_store","outcome":"migrate","status":"pending","next_action":"User to export record_store and users tables as CSV"},
-{"capability":"auth identities","source":"Express JWT + bcrypt users table","outcome":"migrate","status":"pending","next_action":"Import users after export; first login uses password reset"},
-{"capability":"authorization","source":"owner/manager roles; owner-only auditLog,pushSubscriptions","outcome":"migrate","status":"in_progress","next_action":"user_roles table + RLS"},
-{"capability":"sync endpoints","source":"/sync/push, /sync/pull, /auth/*","outcome":"replace with Cloud client + RLS","status":"in_progress","next_action":"Rewrite sync.ts"},
-{"capability":"secrets","source":"DATABASE_URL, JWT_*, SEED_*","outcome":"not needed (replaced by Cloud)","status":"accepted","next_action":"none"},
-{"capability":"file storage","source":"photos/documents stored inline in records","outcome":"keep as-is","status":"in_progress","next_action":"none"},
-{"capability":"verification","source":"-","outcome":"verify","status":"pending","next_action":"Sign-in + sync test"}]}
+{
+ "source": "code-archive KukuLedger_Zip.zip",
+ "capabilities": [
+  {
+   "capability": "code",
+   "source": "client/ (Vite + react-router + Dexie offline store)",
+   "outcome": "migrate",
+   "status": "verified",
+   "next_action": "none"
+  },
+  {
+   "capability": "schema",
+   "source": "server/migrations/0001_core.sql (users, record_store, sync_log)",
+   "outcome": "migrate",
+   "status": "verified",
+   "next_action": "none"
+  },
+  {
+   "capability": "records",
+   "source": "Postgres record_store",
+   "outcome": "migrate",
+   "status": "pending",
+   "next_action": "User to export record_store and users tables as CSV"
+  },
+  {
+   "capability": "auth identities",
+   "source": "Express JWT + bcrypt users table",
+   "outcome": "migrate",
+   "status": "pending",
+   "next_action": "Import users after export; first login uses password reset"
+  },
+  {
+   "capability": "authorization",
+   "source": "owner/manager roles; owner-only auditLog,pushSubscriptions",
+   "outcome": "migrate",
+   "status": "verified",
+   "next_action": "none"
+  },
+  {
+   "capability": "sync endpoints",
+   "source": "/sync/push, /sync/pull, /auth/*",
+   "outcome": "replace with Cloud client + RLS",
+   "status": "verified",
+   "next_action": "none"
+  },
+  {
+   "capability": "secrets",
+   "source": "DATABASE_URL, JWT_*, SEED_*",
+   "outcome": "not needed (replaced by Cloud)",
+   "status": "accepted",
+   "next_action": "none"
+  },
+  {
+   "capability": "file storage",
+   "source": "photos/documents stored inline in records",
+   "outcome": "keep as-is",
+   "status": "verified",
+   "next_action": "none"
+  },
+  {
+   "capability": "verification",
+   "source": "-",
+   "outcome": "verify",
+   "status": "partial",
+   "next_action": "Sign-in and cross-device sync verified; imported-user login pending on data export. Temporary test account kuku.verify.test@mailinator.com still exists (owner) - user declined removal"
+  }
+ ]
+}

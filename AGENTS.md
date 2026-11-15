@@ -28,3 +28,9 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Kuku Ledger
+- Farm screens live in `src/features/*` and read a local Dexie (IndexedDB) store; routes under `src/routes/_app` are `ssr: false` because of that.
+- Sync goes through Cloud: push via `sync_push` RPC, pull from `record_store` by `server_updated_at`; RLS enforces team membership and owner-only tables.
+- Roles live in `user_roles` (owner/manager); the first account to sign up becomes owner.
+- Ported screens use `@/lib/router-compat` instead of react-router-dom so their link/navigation calls stay unchanged.
