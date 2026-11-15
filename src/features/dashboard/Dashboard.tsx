@@ -1,97 +1,116 @@
-import { Wallet, Egg, Users, AlertTriangle, TrendingUp, TrendingDown } from "lucide-react";
+import { AlertTriangle, ArrowRight, Bird, BookOpen, CheckCircle2, ClipboardCheck, CloudUpload, Droplets, Feather, HeartPulse, Home, Scale, Sparkles, Wheat } from "lucide-react";
+import { Link } from "@/lib/router-compat";
+import { useData } from "@/lib/hooks";
+import { today } from "@/lib/db";
+import { useAuth } from "@/features/auth/AuthProvider";
+import { Button } from "@/components/ui/button";
+import { WELFARE_DIMENSIONS } from "@/features/nyansa/content";
+import { EvidenceBadge, Metric, Panel, PreviewBadge, type Evidence } from "@/features/nyansa/ui";
+
+const dimensionIcons = [Scale, Droplets, Feather, HeartPulse, Home];
+
 export function Dashboard() {
+  const { user } = useAuth();
+  const data = useData(async (db) => {
+    const [flocks, reports, alerts, pending, weights, feed, mortality] = await Promise.all([
+      db.flocks.toArray(), db.reports.toArray(), db.alerts.filter((alert) => !alert.resolved).toArray(), db.outbox.count(),
+      db.weightSamples.toArray(), db.feedUsage.toArray(), db.mortalityRecords.toArray(),
+    ]);
+    return { flocks, reports, alerts, pending, weights, feed, mortality };
+  });
+  const active = data?.flocks.filter((flock) => flock.status === "Active") ?? [];
+  const broilers = active.filter((flock) => flock.type === "Broiler");
+  const birds = active.reduce((sum, flock) => sum + flock.liveCount, 0);
+  const reportsToday = data?.reports.filter((report) => report.date === today()) ?? [];
+  const unread = data?.alerts.filter((alert) => !alert.read).length ?? 0;
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+  const date = new Intl.DateTimeFormat("en-UG", { weekday: "long", day: "numeric", month: "long" }).format(new Date());
+
+  const dimensionEvidence: Record<string, { evidence: Evidence; detail: string }> = {
+    growth: { evidence: data?.weights.length ? "Measured" : "Missing", detail: data?.weights.length ? `${data.weights.length} weighing sessions available` : "No weight samples recorded" },
+    intake: { evidence: data?.feed.length ? "Measured" : "Missing", detail: data?.feed.length ? `${data.feed.length} feed records; refill checks still needed` : "No feed or refill records" },
+    environment: { evidence: "Missing", detail: "No scored house checks yet" },
+    health: { evidence: data?.mortality.length ? "Measured" : "Missing", detail: data?.mortality.length ? `${data.mortality.length} mortality records; health check needed` : "No health-check evidence" },
+    housing: { evidence: "Missing", detail: "Add house, litter and equipment evidence" },
+  };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="font-display text-2xl font-semibold text-[var(--foreground)]">
-          Overview
-        </h1>
-        <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-          Good {timeGreeting()}. Here is how the farm is tracking today.
-        </p>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card icon={<Wallet className="h-5 w-5" />} label="Cash on hand" value="UGX 12,450,000" change="+2.1%" up />
-        <Card icon={<Egg className="h-5 w-5" />} label="Eggs today" value="2,340" change="+8%" up />
-        <Card icon={<Users className="h-5 w-5" />} label="Active flocks" value="8" change="2 closed" neutral />
-        <Card icon={<AlertTriangle className="h-5 w-5" />} label="Pending actions" value="3" change="2 need cash-up" warn />
-      </div>
-
-      <div className="grid gap-6 lg:grid-cols-2">
-        <section>
-          <h2 className="mb-3 font-display text-lg font-semibold text-[var(--foreground)]">Flocks</h2>
-          <FlockRow name="Kampala Layer 01" status="active" birds={480} ageDays={124} />
-          <FlockRow name="Entebbe Broiler 02" status="active" birds={620} ageDays={32} />
-          <FlockRow name="Jinja Layer 03" status="closed" birds={0} ageDays={0} />
-        </section>
-
-        <section>
-          <h2 className="mb-3 font-display text-lg font-semibold text-[var(--foreground)]">Recent sales</h2>
-          <p className="text-sm text-[var(--muted-foreground)]">
-            Latest recorded sales appear here once sales screens are wired to data.
-          </p>
-        </section>
-      </div>
-    </div>
-  );
-}
-
-function Card({ icon, label, value, change, up, warn }: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-  change?: string;
-  up?: boolean;
-  neutral?: boolean;
-  warn?: boolean;
-}) {
-  return (
-    <div className="rounded-xl border border-[var(--border)] bg-[var(--color-card)] p-4 shadow-sm">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-sm text-[var(--muted-foreground)]">{label}</p>
-          <p className="mt-1 font-display text-2xl font-semibold text-[var(--foreground)] num">{value}</p>
+    <div className="space-y-7">
+      <section className="nyansa-hero relative overflow-hidden rounded-2xl border border-sidebar-border bg-sidebar px-6 py-7 text-sidebar-foreground sm:px-8 sm:py-9">
+        <div className="relative z-10 grid gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-end">
+          <div>
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              <span className="rounded-full border border-sidebar-foreground/20 px-3 py-1 text-xs font-semibold text-sidebar-foreground/80">{date}</span>
+              <span className="rounded-full bg-sidebar-primary px-3 py-1 text-xs font-bold text-sidebar-primary-foreground">Broiler intelligence</span>
+            </div>
+            <h1 className="max-w-2xl font-display text-3xl font-semibold leading-tight sm:text-4xl">{greeting}, {user?.name?.split(" ")[0] ?? "farmer"}.<br /><span className="text-sidebar-primary">Let’s check the birds first.</span></h1>
+            <p className="mt-4 max-w-xl text-sm leading-6 text-sidebar-foreground/75">Record what you can see, feel and count. Nyansa keeps the evidence clear and never turns missing information into a clean bill of health.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button asChild size="lg" className="bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary/90"><Link to="/daily"><ClipboardCheck />Start today’s checks<ArrowRight /></Link></Button>
+              <Button asChild size="lg" variant="outline" className="border-sidebar-foreground/25 bg-transparent text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"><Link to="/guides"><BookOpen />Open field guides</Link></Button>
+            </div>
+          </div>
+          <div className="rounded-xl border border-sidebar-foreground/15 bg-sidebar-accent/65 p-5 backdrop-blur-sm">
+            <div className="flex items-center justify-between"><span className="text-xs font-semibold uppercase tracking-[0.12em] text-sidebar-foreground/65">Today’s activity</span><CheckCircle2 className="size-5 text-sidebar-primary" /></div>
+            <div className="mt-3 flex items-end gap-2"><span className="num font-display text-4xl font-semibold">{reportsToday.length}</span><span className="pb-1 text-sm text-sidebar-foreground/65">daily reports started</span></div>
+            <div className="mt-4 h-2 overflow-hidden rounded-full bg-sidebar-foreground/10"><div className="h-full rounded-full bg-sidebar-primary transition-all" style={{ width: `${Math.min(100, reportsToday.length * 25)}%` }} /></div>
+            <p className="mt-3 text-xs leading-5 text-sidebar-foreground/65">Mortality, feed, water and one observation form the minimum useful daily record.</p>
+          </div>
         </div>
-        <div className="rounded-full bg-[var(--muted)] p-2 text-[var(--muted-foreground)]">{icon}</div>
+      </section>
+
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <Metric label="Active flocks" value={active.length} note={`${broilers.length} broiler ${broilers.length === 1 ? "flock" : "flocks"}`} icon={<Bird />} />
+        <Metric label="Birds on farm" value={birds.toLocaleString()} note="Current recorded live population" icon={<Feather />} />
+        <Metric label="Open alerts" value={unread} note={unread ? "Review evidence and next steps" : "No unread farm alerts"} icon={<AlertTriangle />} tone={unread ? "warn" : "good"} />
+        <Metric label="Pending sync" value={data?.pending ?? 0} note="Local changes waiting to upload" icon={<CloudUpload />} />
       </div>
-      {change && (
-        <p className={`mt-2 flex items-center text-sm ${up ? "text-[var(--success)]" : warn ? "text-[var(--destructive)]" : "text-[var(--muted-foreground)]"}`}>
-          {up && <TrendingUp className="h-3.5 w-3.5 mr-1" />}
-          {warn && <TrendingDown className="h-3.5 w-3.5 mr-1" />}
-          {change}
-        </p>
-      )}
+
+      <div>
+        <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+          <div><div className="flex items-center gap-2"><h2 className="font-display text-xl font-semibold">Welfare at a glance</h2><PreviewBadge label="Evidence view" /></div><p className="mt-1 text-sm text-muted-foreground">A summary stays unresolved until there is enough evidence — never green by default.</p></div>
+          <Button asChild variant="outline" size="sm"><Link to="/welfare">Explore welfare intelligence<ArrowRight /></Link></Button>
+        </div>
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+          {WELFARE_DIMENSIONS.map((dimension, index) => {
+            const Icon = dimensionIcons[index];
+            const evidence = dimensionEvidence[dimension.id];
+            return <Link key={dimension.id} to={dimension.to} className="group rounded-xl border bg-card p-4 transition-all hover:-translate-y-0.5 hover:border-secondary/40 hover:shadow-md">
+              <div className="flex items-start justify-between"><span className="grid size-9 place-items-center rounded-lg bg-accent text-accent-foreground"><Icon className="size-4" /></span><EvidenceBadge evidence={evidence.evidence} /></div>
+              <h3 className="mt-4 text-sm font-semibold">{dimension.name}</h3>
+              <p className="mt-1 min-h-10 text-xs leading-5 text-muted-foreground">{evidence.detail}</p>
+              <div className="mt-3 flex items-center justify-between border-t pt-3 text-xs"><span className="font-medium text-muted-foreground">Not enough information</span><ArrowRight className="size-3.5 text-secondary transition-transform group-hover:translate-x-1" /></div>
+            </Link>;
+          })}
+        </div>
+      </div>
+
+      <div className="grid gap-5 xl:grid-cols-[1.35fr_1fr]">
+        <Panel title="Today’s priorities" description="A guided workflow for the next house visit." action={<Link to="/daily" className="text-xs font-semibold text-primary hover:underline">View all</Link>}>
+          <div className="divide-y">
+            <Priority icon={<HeartPulse />} title="Confirm mortality" description="Record deaths or explicitly confirm ‘no deaths today’." to="/daily" />
+            <Priority icon={<Wheat />} title="Reconcile feed" description="Record feed issued, leftovers and any known wastage." to="/feed" />
+            <Priority icon={<Droplets />} title="Check drinker refills" description="Include leftover water, spills and leaking drinkers." to="/water" />
+            <Priority icon={<Feather />} title="Score the house" description="Heat, behaviour, air, ammonia, draughts and dust." to="/environment" />
+          </div>
+        </Panel>
+
+        <Panel title="How intelligence will read the evidence" description="Example workflow only — this is not a live alert.">
+          <div className="rounded-xl border border-warning/25 bg-warning/5 p-4">
+            <div className="flex items-center justify-between gap-3"><span className="text-xs font-bold uppercase tracking-[0.12em] text-warning">Example combined prompt</span><PreviewBadge label="Illustration" /></div>
+            <h3 className="mt-3 font-display text-lg font-semibold">Check litter, drinkers and ventilation together</h3>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">If ammonia smell rises to 3, litter becomes caked and feed intake falls, Nyansa will connect those observations instead of raising unrelated alarms.</p>
+            <div className="mt-4 flex flex-wrap gap-2"><EvidenceBadge evidence="Observed" /><EvidenceBadge evidence="Missing" /></div>
+            <p className="mt-3 text-xs leading-5 text-muted-foreground">No ppm reading in this example. The wording remains a prompt to check, not a diagnosis.</p>
+          </div>
+          <Button asChild variant="outline" className="mt-4 w-full"><Link to="/assistant"><Sparkles />Preview Nyansa’s investigation assistant</Link></Button>
+        </Panel>
+      </div>
     </div>
   );
 }
 
-function FlockRow({ name, status, birds, ageDays }: {
-  name: string;
-  status: "active" | "closed";
-  birds: number;
-  ageDays: number;
-}) {
-  return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--color-background)] px-3 py-2.5 text-sm">
-      <div className="flex items-center justify-between">
-        <span className="font-medium text-[var(--foreground)]">{name}</span>
-        <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${status === "active" ? "bg-[var(--success)]/10 text-[var(--success)]" : "bg-[var(--muted)] text-[var(--muted-foreground)]"}`}>
-          {status}
-        </span>
-      </div>
-      <div className="mt-1 flex gap-4 text-[var(--muted-foreground)]">
-        {birds > 0 && <span>{birds.toLocaleString()} birds</span>}
-        {ageDays > 0 && <span>{ageDays} days</span>}
-      </div>
-    </div>
-  );
-}
-
-function timeGreeting() {
-  const h = new Date().getHours();
-  if (h < 12) return "morning";
-  if (h < 17) return "afternoon";
-  return "evening";
+function Priority({ icon, title, description, to }: { icon: React.ReactNode; title: string; description: string; to: string }) {
+  return <Link to={to} className="group flex items-center gap-3 py-3 first:pt-0 last:pb-0"><span className="grid size-9 shrink-0 place-items-center rounded-lg bg-muted text-secondary [&_svg]:size-4">{icon}</span><span className="min-w-0 flex-1"><span className="block text-sm font-semibold">{title}</span><span className="block text-xs leading-5 text-muted-foreground">{description}</span></span><ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" /></Link>;
 }
